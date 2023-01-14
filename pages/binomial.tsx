@@ -4,6 +4,7 @@ import {Inter} from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import React, {useState} from "react";
 import {useRouter} from "next/router";
+import background from "./public/next.svg";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -31,55 +32,54 @@ const Binomial = () => {
     }
 
     // Validate input
-    if (a > 1000 || b > 1000 || n > 1000) {
-      setError("Values cannot be over 1000 due to limited computing power");
+    if (a > 100 || a < -100 || b > 100 || b < -100 || n > 50 || n < -50) {
+      setError("a, b ∈ [-100; 100]; n ∈ [-50; 50] due to output limitations");
       return;
     }
 
+    // Validate input
     if ((!Number.isInteger(n) || n < 1) && b !== 1) {
       setError("For non-natural n, only b = 1 accepted");
       return;
     }
 
-    let res: string = '';
-
-    if (!Number.isInteger(n) || n < 1) {
-      res = CalculateForNonNaturalN(a, b, n);
-    } else {
-      res = CalculateForNaturalN(a, b, n);
-    }
-
-    setResult(res);
+    setResult(CalcBinomialCoefficients(a, b, n));
   };
 
-  const CalculateForNaturalN = (a : number, b : number, n : number) : string => {
+  const CalcBinomialCoefficients = (a : number, b : number, n : number) : string => {
     let i : number = 1;
     let k : number = 1;
+    console.log('a = ' + a + ', b = ' + b + ', n = ' + n);
     return CalcTerm(a, b, n, i, k);
-  }
-
-  const CalculateForNonNaturalN = (a : number, b : number, n : number) : string => {
-    return 'Not yet implemented for non-natural n';
   }
 
   const CalcTerm = (a : number, b : number, n : number, i : number, k : number) : string => {
     let prev_result !: string;
     let next_i : number = i + 1;
     let next_k : number = k * (n - (next_i - 2)) / (next_i - 1);
-    if (i < n + 1) {
+    if (((!Number.isInteger(n) || n < 1) ? (i <= 20) : (i < n + 1))) {
       prev_result = CalcTerm(a, b, n, next_i, next_k);
     }
     let x_coef : number = k * (b ** (n - i + 1)) * (a ** (i - 1));
-    console.log('k = ' + k + ', i = ' + i + ', a = ' + a + ', b = ' + b + ', n = ' + n);
-    console.log(x_coef);
-    let term_result : string = x_coef + 'x^' + (i - 1);
+    console.log('k = ' + k + ', i = ' + i);
+    console.log(Number(x_coef.toFixed(9)));
+    let term_result : string = Number(x_coef.toFixed(9)) + 'x^' + (i - 1);
     if (prev_result != null) {
       return prev_result.concat(' + ').concat(term_result);
     } else return term_result;
   }
 
   return (
-    <div>
+    <div  >
+    {/*<div style={{backgroundImage: "url(/next.svg)", backgroundColor: 'white', width: '100px', height: '100px'}}>*/}
+      {/*<Image*/}
+      {/*  className={styles.logo}*/}
+      {/*  src="/next.svg"*/}
+      {/*  alt="Next.js Logo"*/}
+      {/*  width={180}*/}
+      {/*  height={37}*/}
+      {/*  priority*/}
+      {/*/>*/}
       <form onSubmit={handleSubmit}>
         <label>
           a:
