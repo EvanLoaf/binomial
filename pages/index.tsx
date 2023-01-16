@@ -77,7 +77,7 @@ const Binomial = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="icon" href="/favicon-16x16.png"/>
       </Head>
-      <main className={styles.center} style={{backgroundImage: "url(/Background01.png)"}}>
+      <main className={styles.center} style={{backgroundImage: "url(/Background01.png)", color: 'white'}}>
         <div>
           <form onSubmit={handleSubmit} className={styles.center_form}>
             <label className={styles.center_form}>
