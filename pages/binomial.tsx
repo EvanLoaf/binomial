@@ -46,73 +46,74 @@ const Binomial = () => {
     setResult(CalcBinomialCoefficients(a, b, n));
   };
 
-  const CalcBinomialCoefficients = (a : number, b : number, n : number) : string => {
-    let i : number = 1;
-    let k : number = 1;
+  const CalcBinomialCoefficients = (a: number, b: number, n: number): string => {
+    let i: number = 1;
+    let k: number = 1;
     console.log('a = ' + a + ', b = ' + b + ', n = ' + n);
     return CalcTerm(a, b, n, i, k);
   }
 
-  const CalcTerm = (a : number, b : number, n : number, i : number, k : number) : string => {
+  const CalcTerm = (a: number, b: number, n: number, i: number, k: number): string => {
     let prev_result !: string;
-    let next_i : number = i + 1;
-    let next_k : number = k * (n - (next_i - 2)) / (next_i - 1);
+    let next_i: number = i + 1;
+    let next_k: number = k * (n - (next_i - 2)) / (next_i - 1);
     if (((!Number.isInteger(n) || n < 1) ? (i <= 20) : (i < n + 1))) {
       prev_result = CalcTerm(a, b, n, next_i, next_k);
     }
-    let x_coef : number = k * (b ** (n - i + 1)) * (a ** (i - 1));
+    let x_coef: number = k * (b ** (n - i + 1)) * (a ** (i - 1));
     console.log('k = ' + k + ', i = ' + i);
     console.log(Number(x_coef.toFixed(9)));
-    let term_result : string = Number(x_coef.toFixed(9)) + 'x^' + (i - 1);
+    let term_result: string = Number(x_coef.toFixed(9)) + 'x^' + (i - 1);
     if (prev_result != null) {
       return prev_result.concat(' + ').concat(term_result);
     } else return term_result;
   }
 
   return (
-    <div  >
-    {/*<div style={{backgroundImage: "url(/next.svg)", backgroundColor: 'white', width: '100px', height: '100px'}}>*/}
-      {/*<Image*/}
-      {/*  className={styles.logo}*/}
-      {/*  src="/next.svg"*/}
-      {/*  alt="Next.js Logo"*/}
-      {/*  width={180}*/}
-      {/*  height={37}*/}
-      {/*  priority*/}
-      {/*/>*/}
-      <form onSubmit={handleSubmit}>
-        <label>
-          a:
-          <input
-            type="text"
-            value={a_coef}
-            onChange={(e) => setA(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          b:
-          <input
-            type="text"
-            value={b_coef}
-            onChange={(e) => setB(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          n:
-          <input
-            type="text"
-            value={n_coef}
-            onChange={(e) => setN(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-      {error && <div>{error}</div>}
-      {result && <div>Result: {result}</div>}
-    </div>
+    <>
+      <Head>
+        <title>Create Next App</title>
+        <meta name="description" content="Binomial"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" href="/favicon-16x16.png"/>
+      </Head>
+      <main className={styles.center} style={{backgroundImage: "url(/Background01.png)"}}>
+        <div>
+          <form onSubmit={handleSubmit} className={styles.center_form}>
+            <label className={styles.center_form}>
+              a:
+              <input
+                type="text"
+                value={a_coef}
+                onChange={(e) => setA(e.target.value)}
+              />
+            </label>
+            <br/>
+            <label className={styles.center_form}>
+              b:
+              <input
+                type="text"
+                value={b_coef}
+                onChange={(e) => setB(e.target.value)}
+              />
+            </label>
+            <br/>
+            <label className={styles.center_form}>
+              n:
+              <input
+                type="text"
+                value={n_coef}
+                onChange={(e) => setN(e.target.value)}
+              />
+            </label>
+            <br/>
+            <button type="submit">Submit</button>
+          </form>
+          {error && <div style={{ marginTop: '10px' }}>{error}</div>}
+          {result && <div style={{ marginTop: '10px' }}>Result: {result}</div>}
+        </div>
+      </main>
+    </>
   );
 }
 
